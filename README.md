@@ -7,22 +7,22 @@ A search phrase and a page are very different, so one autoencoder/latent space w
 
 ### the algorithm
 
-The engine has three functions: indexing, recommending, and updating. To do this, it consists of the *search autoencoder*, the *text autoencoder*, and the *search-text map*.
+The engine has three functions: indexing, recommending, and updating. To do this, it consists of the *text autoencoder* and the *search predictor*.
 
 To index a given URL:
 
 1. Get the HTML of the page and keep any text.
 2. Train the text autoencoder on the text.
-3. Split the set of latent points of the text autoencoder into clusters, and save the coordinates of the centre of each cluster.
+3. Pass the text through the text autoencoder.
 4. Save the URL and its latent coordinates.
 
-To recommend a list of URLs, given a search:
+To recommend a list of *n* URLs, given a search phrase:
 
-1. ...
+1. Pass the search phrase through the search predictor to get a set of coordinates.
+2. Find the set of *n* URLs with latent coordinates closest to the search phrase coordinates.
 
-### dev notes
+To update its model, given a search phrase, a URL, and a score *s* in {-1, 1}:
 
-1. Get search phrase.
-2. For any URL, get score *s* in {-1, 0, 1}.
-3. Move search point *s* units closer to URL point.
-4. Train the 
+1. If the search phrase has not been saved before, pass it through the search predictor and save it with the resulting coordinates.
+2. Move the search phrase coordinates *s* closer to the URL's coordinates.
+3. Retrain the search predictor on the set of saved search phrases and their coordinates.
