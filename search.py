@@ -13,7 +13,7 @@ from keras import Model
 
 
 def index_url(url: str) -> List[float]:
-    # html -> just text -> tokens -> just english tokens -> floats
+    # html -> just text -> tokens -> floats -> better floats
     html = requests.get(url).text
     soup = BeautifulSoup(html, features="html.parser")
     for script in soup(["script", "style"]):

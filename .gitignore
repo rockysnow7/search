@@ -1,4 +1,7 @@
 .replit
+*.swp
 poetry.lock
 pyproject.toml
 __pycache__
+/index/target/
+/index/Cargo.lock
